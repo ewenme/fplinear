@@ -25,5 +25,10 @@ unique_goalies <- distinct(goalie_data, player_id, web_name, team_name)
 
 # DO ----------------------------------------------------------------------
 
-# loop rotation function test
-foo <- lapply(goalie_data, function(x) rotate_pts())
+# get points rotation for all goalies
+test <- lapply(seq_along(goalie_data$player_id), rotate_all, data=goalie_data)
+
+# bind these items
+goalie_rotation <- bind_rows(test) %>%
+  # get unique goalie combos
+  

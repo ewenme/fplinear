@@ -24,17 +24,17 @@ return(max_points_total)
 }
 
 # function to get points total for all rotations with a named player
-rotate_all <- function(id_player) {
+rotate_all <- function(data, id_player) {
   
   # player points
-  player_points <- player_data %>%
+  player_points <- data %>%
     # match player id to inputs
     dplyr::filter(player_id == id_player) %>%
     # keep points
     dplyr::select(round, player_id, total_points)
   
   # other player points
-  other_points <- player_data %>%
+  other_points <- data %>%
     # match player id to inputs
     dplyr::filter(player_id != id_player) %>%
     # keep points
@@ -58,7 +58,7 @@ rotate_all <- function(id_player) {
   
   # iterate through other players to compare points to orig player
   points_compare <- other_points_nested %>%
-    purrr::map(~bind_rows(., player_points)) %>%
+    purrr::map(~dplyr::bind_rows(., player_points)) %>%
     purrr::map(~collect_points(.))
   
   # create df from named list
