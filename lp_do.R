@@ -60,5 +60,6 @@ goalie_rotation <- goalie_rotation %>%
 
 # top ten combos
 goalie_rotation %>%
+  filter(points > 10) %>%
   ggplot(aes(x=points, y=total_price)) +
   geom_jitter()
