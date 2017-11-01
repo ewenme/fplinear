@@ -51,14 +51,8 @@ goalie_rotation <- goalie_rotation %>%
   rename(player_name=web_name.x, team_name=team_name.x, start_price=start_price.x,
          rotation_player_name=web_name.y, rotation_team_name=team_name.y, 
          rotation_start_price=start_price.y) %>%
-  # add total value col and name col
+  # add total value col, name col and points per mil col
   mutate(total_price=start_price+rotation_start_price,
-         combo=glue("{player_name} ({team_name}) & {rotation_player_name} ({rotation_team_name}) "))
+         combo=glue("{player_name} ({team_name}) & {rotation_player_name} ({rotation_team_name}) "),
+         pts_per_mil=points/total_price)
 
-
-# VIZ ---------------------------------------------------------------------
-
-# top ten combos
-goalie_rotation %>%
-  ggplot(aes(x=points, y=total_price)) +
-  geom_point()
